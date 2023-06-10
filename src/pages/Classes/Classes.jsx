@@ -1,22 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../components/Auth/AuthProvider"; // Replace with the correct path
 
 const ClassesPage = ({ onClassSelect }) => {
   const [classes, setClasses] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     fetch("http://localhost:5000/classes")
       .then((response) => response.json())
-      .then((data) => setClasses(data))
+      .then((data) => {
+        const selectedClasses =
+          JSON.parse(localStorage.getItem("selectedClasses")) || [];
+        const updatedClasses = data.map((course) => {
+          if (selectedClasses.includes(course._id)) {
+            return { ...course, isSelected: true };
+          }
+          return course;
+        });
+        setClasses(updatedClasses);
+      })
       .catch((error) => console.log(error));
   }, []);
 
   const handleSelect = (classId) => {
+    if (!user) {
+      alert("Please log in before selecting a class.");
+      return;
+    }
+
     setClasses((prevClasses) =>
-      prevClasses.map((course) =>
-        course._id === classId
-          ? { ...course, isSelected: !course.isSelected }
-          : course
-      )
+      prevClasses.map((course) => {
+        if (course._id === classId) {
+          const isSelected = !course.isSelected;
+          if (isSelected) {
+            // Add classId to selectedClasses in local storage
+            const selectedClasses =
+              JSON.parse(localStorage.getItem("selectedClasses")) || [];
+            if (!selectedClasses.includes(classId)) {
+              selectedClasses.push(classId);
+              localStorage.setItem(
+                "selectedClasses",
+                JSON.stringify(selectedClasses)
+              );
+            }
+          } else {
+            // Remove classId from selectedClasses in local storage
+            const selectedClasses =
+              JSON.parse(localStorage.getItem("selectedClasses")) || [];
+            const updatedSelectedClasses = selectedClasses.filter(
+              (id) => id !== classId
+            );
+            localStorage.setItem(
+              "selectedClasses",
+              JSON.stringify(updatedSelectedClasses)
+            );
+          }
+          return { ...course, isSelected };
+        }
+        return course;
+      })
     );
   };
 

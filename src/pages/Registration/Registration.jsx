@@ -15,7 +15,10 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
+
+  const password = watch("password");
 
   const onSubmit = (data) => {
     const { email, password, name, photoURL } = data;
@@ -24,6 +27,11 @@ const Register = () => {
 
     if (password.length < 6) {
       setError("Please enter at least 6 characters for your password.");
+      return;
+    }
+
+    if (password !== data.confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
 
@@ -67,7 +75,7 @@ const Register = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="max-w-md w-full mx-4 p-6 rounded-lg shadow-lg">
+      <div className="max-w-md w-full mx-4 p-6 rounded-lg border shadow-lg">
         <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4 relative">
@@ -103,6 +111,21 @@ const Register = () => {
             />
             {errors.password && (
               <p className="text-red-500 mt-1">{errors.password.message}</p>
+            )}
+          </div>
+          <div className="mb-4 relative">
+            <input
+              className="w-full pl-10 pr-4 py-3 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="password"
+              {...register("confirmPassword", {
+                required: "Please confirm your password",
+              })}
+              placeholder="Confirm Password"
+            />
+            {errors.confirmPassword && (
+              <p className="text-red-500 mt-1">
+                {errors.confirmPassword.message}
+              </p>
             )}
           </div>
           <input

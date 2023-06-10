@@ -1,62 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link, Outlet } from "react-router-dom";
 
 const StudentDashboard = () => {
-  const [activeTab, setActiveTab] = useState(1);
-
-  const handleTabChange = (tabNumber) => {
-    setActiveTab(tabNumber);
-  };
-
   return (
-    <div className="flex flex-col">
-      <div className="flex mb-4">
-        <button
-          className={`px-4 py-2 mr-2 ${
-            activeTab === 1 ? "bg-blue-500 text-white" : "bg-gray-300"
-          }`}
-          onClick={() => handleTabChange(1)}
-        >
-          My Selected Classes
-        </button>
-        <button
-          className={`px-4 py-2 mr-2 ${
-            activeTab === 2 ? "bg-blue-500 text-white" : "bg-gray-300"
-          }`}
-          onClick={() => handleTabChange(2)}
-        >
-          My Enrolled Classes
-        </button>
-        <button
-          className={`px-4 py-2 ${
-            activeTab === 3 ? "bg-blue-500 text-white" : "bg-gray-300"
-          }`}
-          onClick={() => handleTabChange(3)}
-        >
-          Payment History
-        </button>
+    <div className="flex">
+      <nav className="w-1/4 h-screen bg-gray-200 p-4">
+        <h2 className="text-2xl font-bold mb-4">Student Dashboard</h2>
+        <ul className="space-y-2">
+          <li>
+            <Link
+              to="/dashboard/selected-classes"
+              className="text-blue-500 hover:underline"
+            >
+              My Selected Classes
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/dashboard/enrolled-classes"
+              className="text-blue-500 hover:underline"
+            >
+              My Enrolled Classes
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/dashboard/payment"
+              className="text-blue-500 hover:underline"
+            >
+              Payment
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="w-3/4 h-screen p-4">
+        {/* Render the child routes */}
+        <Outlet />
       </div>
-
-      {/* Tab content */}
-      {activeTab === 1 && (
-        <div>
-          {/* My Selected Classes content */}
-          <p>Content for My Selected Classes tab goes here</p>
-        </div>
-      )}
-
-      {activeTab === 2 && (
-        <div>
-          {/* My Enrolled Classes content */}
-          <p>Content for My Enrolled Classes tab goes here</p>
-        </div>
-      )}
-
-      {activeTab === 3 && (
-        <div>
-          {/* Payment History content */}
-          <p>Content for Payment History tab goes here</p>
-        </div>
-      )}
     </div>
   );
 };
