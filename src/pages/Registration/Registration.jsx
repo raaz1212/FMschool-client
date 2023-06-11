@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../components/Auth/AuthProvider";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import Social from "../../components/Social/Social";
 
 const Register = () => {
   document.title = "DC Toys | Register";
@@ -37,6 +38,19 @@ const Register = () => {
 
     createUser(email, password)
       .then((result) => {
+        const saveUser = { name: name, email: email };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(saveUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+
         const loggedUser = result.user;
         setError("");
         setSuccess("User has been created successfully.");
@@ -140,6 +154,9 @@ const Register = () => {
           >
             Register
           </button>
+          <div className="mt-8">
+            <Social />
+          </div>
         </form>
         <p className="mt-4 text-center text-sm">
           Already have an account? Please{" "}
@@ -150,6 +167,7 @@ const Register = () => {
             Log In
           </Link>{" "}
         </p>
+
         {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
         {success && <p className="mt-4 text-center">{success}</p>}
       </div>

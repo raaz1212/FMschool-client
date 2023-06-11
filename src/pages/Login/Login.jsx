@@ -1,28 +1,20 @@
 import React, { useState, useContext } from "react";
-import { useSpring, animated } from "react-spring";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/Auth/AuthProvider";
-import { app } from "../../firebase/firbase.config";
 import { useForm } from "react-hook-form";
+import Social from "../../components/Social/Social";
+import { HiEye, HiEyeOff } from "react-icons/hi";
 
 const Login = () => {
-  document.title = "DC Toys | LogIn";
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const { signIn } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fadeAnimation = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    config: { duration: 1000 },
-  });
-
-  const auth = getAuth(app);
-  const googleProvider = new GoogleAuthProvider();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -45,32 +37,15 @@ const Login = () => {
       });
   });
 
-  const handleGoogleSignIn = () => {
-    const from = location.state?.from?.pathname || "/";
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        const loggedInUser = result.user;
-        navigate(from, { replace: true });
-        setUser(loggedInUser);
-      })
-      .catch((error) => {
-        setError("Failed to sign in with Google.");
-      });
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   return (
-    <animated.div
-      style={fadeAnimation}
-      className="flex flex-row justify-center items-center min-h-screen py-4 login-bg"
-    >
-      <div className="flex flex-col justify-center items-center w-1/2 ">
-        <h2 className="text-6xl font-bold">Welcome!!!</h2>
-        <p className="text-lg mt-4">Please sign in to continue.</p>
-      </div>
-      <div>
-        <animated.div style={fadeAnimation} className="text-center">
+    <div className="flex justify-center items-center h-screen">
+      <div className="border rounded-lg shadow-lg p-6">
+        <div className="text-center">
           {error && <p className="text-red-500 mb-4">{error}</p>}
-          <hr className="my-4" />
           <form onSubmit={handleEmailSignIn}>
             <div className="mb-4">
               <label className="block text-sm font-bold mb-2" htmlFor="email">
@@ -93,12 +68,22 @@ const Login = () => {
               >
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                className="shadow border rounded w-full py-2 px-3 mb-3 focus:outline-none focus:shadow-outline zoom-effect"
-                {...register("password", { required: "Password is required" })}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className="shadow border rounded w-full py-2 px-3 mb-3 focus:outline-none focus:shadow-outline zoom-effect"
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
+                />
+                <span
+                  className="absolute top-2 right-3 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <HiEyeOff /> : <HiEye />}
+                </span>
+              </div>
               {errors.password && (
                 <p className="text-red-500 mb-4">{errors.password.message}</p>
               )}
@@ -110,27 +95,10 @@ const Login = () => {
               Sign in
             </button>
           </form>
-          <div className="flex gap-2">
-            <button
-              onClick={handleGoogleSignIn}
-              type="button"
-              className="flex items-center justify-center w-full p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600 zoom-effect-button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 12.083 12.083"
-                width="29"
-                height="29"
-              >
-                {/* SVG path code */}
-              </svg>
-              Google login
-            </button>
-          </div>
-        </animated.div>
+          <Social />
+        </div>
 
-        <div className="mt-4">
+        <div className="mt-4 text-center">
           Do not have an account? please{" "}
           <Link
             to="/register"
@@ -141,7 +109,7 @@ const Login = () => {
           here.
         </div>
       </div>
-    </animated.div>
+    </div>
   );
 };
 
