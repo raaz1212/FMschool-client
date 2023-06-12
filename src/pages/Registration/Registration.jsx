@@ -17,6 +17,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm();
 
   const password = watch("password");
@@ -57,6 +58,7 @@ const Register = () => {
         updateUserData(result.user, name, photoURL);
         logOut(result.user);
         showSweetAlert();
+        reset(); // Reset the form fields
       })
       .catch((error) => {
         setError(error.message);
@@ -69,6 +71,7 @@ const Register = () => {
       photoURL: photoURL,
     })
       .then(() => {
+        reset();
         console.log("User data updated");
       })
       .catch((error) => {

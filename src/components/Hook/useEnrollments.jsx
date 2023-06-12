@@ -8,6 +8,10 @@ const useEnrollments = () => {
   const { refetch, data: enrollments = [] } = useQuery({
     queryKey: ["enrollments", user?.email],
     queryFn: async () => {
+      if (!user || !token) {
+        return []; // Return an empty array if the user is not logged in
+      }
+
       const res = await fetch(
         `http://localhost:5000/enrollments?email=${user?.email}`,
         {

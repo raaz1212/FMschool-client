@@ -3,13 +3,15 @@ import Footer from "../components/Footer/Footer";
 import Main from "../components/Main/Main";
 import Navbar from "../components/Navbar/Navbar";
 import ClassesPage from "../pages/Classes/Classes";
-import AllUsersPage from "../pages/Dashboard/AllUsers";
-import StudentDashboard from "../pages/Dashboard/Dashboard";
-import SelectedClass from "../pages/Dashboard/SelectedClass";
+import AllUsersPage from "../pages/Dashboard/Admin/AllUsers";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import AddClassPage from "../pages/Dashboard/Instructor/AddClass";
+import SelectedClass from "../pages/Dashboard/Student/SelectedClass";
 import Home from "../pages/Home/Home/Home";
 import InstructorsPage from "../pages/Instructors/Instructor";
 import LoginPage from "../pages/Login/Login";
 import Register from "../pages/Registration/Registration";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 
 const routes = createBrowserRouter([
@@ -51,7 +53,7 @@ const routes = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Navbar />
-        <StudentDashboard />
+        <Dashboard />
       </PrivateRoute>
     ),
     children: [
@@ -63,10 +65,10 @@ const routes = createBrowserRouter([
         path: "/dashboard/all-users",
         element: <AllUsersPage />,
       },
-      // {
-      //   path: "/payment",
-      //   element: <Payment></Payment>,
-      // },
+      {
+        path: "/dashboard/courses",
+        element: <AddClassPage></AddClassPage>,
+      },
     ],
   },
 ]);

@@ -15,13 +15,14 @@ const ClassCard = ({ classData }) => {
     summary,
     _id,
   } = classData;
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [, refetch] = useEnrollments();
 
   const handleEnroll = () => {
-    console.log(classData);
+    // const { user, token } = useContext(AuthContext);
+
     if (user && user.email) {
       const enrollmentData = {
         classId: _id,
@@ -34,6 +35,7 @@ const ClassCard = ({ classData }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `bearer ${token}`,
         },
         body: JSON.stringify(enrollmentData),
       })
@@ -67,14 +69,14 @@ const ClassCard = ({ classData }) => {
   };
 
   return (
-    <div
-      className={` m-8 ${
-        availableSeats === 0 ? "bg-red-500 text-black" : "bg-none"
-      }`}
-    >
-      <div className="rounded shadow-lg shadow-orange-300 p-4">
+    <div className="m-4">
+      <div
+        className={`rounded shadow-lg shadow-orange-300 p-4 ${
+          availableSeats === 0 ? "bg-red-500 text-black" : "bg-none"
+        } `}
+      >
         <img
-          className="w-full h-48 object-contain mb-4 rounded-lg"
+          className="w-full h-auto object-contain mb-4 rounded-lg"
           src={image}
           alt={name}
         />

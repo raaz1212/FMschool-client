@@ -9,6 +9,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { app } from "../../firebase/firbase.config";
+import { getRole } from "./Auth";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -16,6 +17,13 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      getRole(user.email).then((data) => setRole(data));
+    }
+  }, [user]);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -58,6 +66,8 @@ const AuthProvider = ({ children }) => {
     signIn,
     logOut,
     signInWithGoogle,
+    role,
+    setRole,
   };
   return (
     <AuthContext.Provider value={authinfo}>{children}</AuthContext.Provider>

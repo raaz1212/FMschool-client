@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import useEnrollments from "../../components/Hook/useEnrollments";
+import useEnrollments from "../../../components/Hook/useEnrollments";
 
 const SelectedClass = () => {
   const [enrollments, refetch] = useEnrollments();
