@@ -4,15 +4,18 @@ import Main from "../components/Main/Main";
 import Navbar from "../components/Navbar/Navbar";
 import ClassesPage from "../pages/Classes/Classes";
 import AllUsersPage from "../pages/Dashboard/Admin/AllUsers";
+import NewClassList from "../pages/Dashboard/Admin/NewClasses";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import AddClassPage from "../pages/Dashboard/Instructor/AddClass";
 import MyClasses from "../pages/Dashboard/Instructor/ListedClass";
+import Payment from "../pages/Dashboard/Student/Payment/Payment";
 import SelectedClass from "../pages/Dashboard/Student/SelectedClass";
 import Home from "../pages/Home/Home/Home";
 import InstructorsPage from "../pages/Instructors/Instructor";
 import LoginPage from "../pages/Login/Login";
 import Register from "../pages/Registration/Registration";
 import AdminRoute from "./AdminRoute";
+import InstructorRoute from "./InstructorRoute";
 import PrivateRoute from "./PrivateRoute";
 
 const routes = createBrowserRouter([
@@ -63,16 +66,44 @@ const routes = createBrowserRouter([
         element: <SelectedClass />,
       },
       {
-        path: "/dashboard/all-users",
-        element: <AllUsersPage />,
+        path: "/dashboard/payments",
+        element: <Payment />,
       },
       {
-        path: "/dashboard/courses",
-        element: <AddClassPage></AddClassPage>,
+        path: "/dashboard/payment-history",
+        element: <SelectedClass />,
+      },
+      {
+        path: "/dashboard/all-users",
+        element: (
+          <AdminRoute>
+            <AllUsersPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/new-classes",
+        element: (
+          <AdminRoute>
+            <NewClassList />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-course",
+        element: (
+          <InstructorRoute>
+            <AddClassPage />
+          </InstructorRoute>
+        ),
       },
       {
         path: "/dashboard/listed-class",
-        element: <MyClasses></MyClasses>,
+        element: (
+          <InstructorRoute>
+            <MyClasses />
+          </InstructorRoute>
+        ),
       },
     ],
   },

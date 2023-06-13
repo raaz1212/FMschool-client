@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex">
-      <div className="w-1/4 h-screen bg-gray-200 p-4">
+      <div className="w-1/4 h-screen p-4">
         {isAdmin && (
           <>
             <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
@@ -21,7 +21,7 @@ const Dashboard = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/classes" className="text-blue-500">
+                <Link to="/dashboard/new-classes" className="text-blue-500">
                   Manage Classes
                 </Link>
               </li>
@@ -33,7 +33,7 @@ const Dashboard = () => {
             <h1 className="text-3xl font-bold mb-6">Instructor Dashboard</h1>
             <ul className="space-y-2">
               <li>
-                <Link to="/dashboard/courses" className="text-blue-500">
+                <Link to="/dashboard/add-course" className="text-blue-500">
                   Add Course
                 </Link>
               </li>

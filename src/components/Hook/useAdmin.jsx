@@ -5,18 +5,21 @@ import { AuthContext } from "../Auth/AuthProvider";
 
 const useAdmin = () => {
   const { user, loading } = useContext(AuthContext);
-  const { data: adminUser, isLoading: isAdminLoading } = useQuery({
+  const { data: adminData, isLoading: isAdminLoading } = useQuery({
     queryKey: ["isAdmin", user?.email],
-    enabled: !loading,
+    enabled: !loading && !!user?.email,
     queryFn: async () => {
+      if (!user || !user.email) {
+        return { admin: false };
+      }
       const res = await axios.get(
-        `http://localhost:5000/users/admin/${user?.email}`
+        `http://localhost:5000/users/admin/${user.email}`
       );
       return res.data;
     },
   });
 
-  const isAdmin = adminUser?.role === "admin";
+  const isAdmin = adminData?.admin === true;
 
   return [isAdmin, isAdminLoading];
 };

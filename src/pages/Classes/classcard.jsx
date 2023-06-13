@@ -1,28 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/Auth/AuthProvider";
 import useEnrollments from "../../components/Hook/useEnrollments";
 
 const ClassCard = ({ classData }) => {
-  const {
-    image,
-    name,
-    instructorName,
-    availableSeats,
-    price,
-    students,
-    summary,
-    _id,
-  } = classData;
+  const { image, name, instructorName, availableSeats, price, students, _id } =
+    classData;
   const { role, user, token } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [, refetch] = useEnrollments();
+  useEffect(() => {
+    if (!user) {
+      refetch();
+    }
+  }, [user, refetch]);
 
   const handleEnroll = () => {
-    // const { user, token } = useContext(AuthContext);
-
     if (user && user.email) {
       const enrollmentData = {
         classId: _id,
@@ -92,7 +87,9 @@ const ClassCard = ({ classData }) => {
           className={`btn ${
             availableSeats === 0 ? "btn-disabled" : "btn-primary"
           }`}
-          disabled={availableSeats === 0}
+          disabled={
+            availableSeats === 0 || role === "admin" || role === "instructor"
+          }
         >
           {availableSeats === 0 ? "Class Full" : "Enroll"}
         </button>

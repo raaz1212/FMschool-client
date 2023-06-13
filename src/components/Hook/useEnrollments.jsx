@@ -3,27 +3,19 @@ import { useContext } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
 
 const useEnrollments = () => {
-  const { user, token } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  const { refetch, data: enrollments = [] } = useQuery({
+  const { refetch, data: enrollment = [] } = useQuery({
     queryKey: ["enrollments", user?.email],
     queryFn: async () => {
-      if (!user || !token) {
-        return []; // Return an empty array if the user is not logged in
-      }
-
       const res = await fetch(
-        `http://localhost:5000/enrollments?email=${user?.email}`,
-        {
-          headers: {
-            authorization: `bearer ${token}`,
-          },
-        }
+        `http://localhost:5000/enrollments?email=${user?.email}`
       );
       return res.json();
     },
   });
 
-  return [enrollments, refetch];
+  return [enrollment, refetch];
 };
+
 export default useEnrollments;

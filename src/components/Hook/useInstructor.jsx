@@ -5,18 +5,23 @@ import { AuthContext } from "../Auth/AuthProvider";
 
 const useInstructor = () => {
   const { user, loading } = useContext(AuthContext);
-  const { data: instructors, isLoading: instructorsLoading } = useQuery({
-    queryKey: ["instructors"],
-    enabled: !loading,
+  const { data: instructorData, isLoading: isInstructorLoading } = useQuery({
+    queryKey: ["isInstructor", user?.email],
+    enabled: !loading && !!user?.email,
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/users");
+      if (!user || !user.email) {
+        return { instructor: false };
+      }
+      const res = await axios.get(
+        `http://localhost:5000/users/instructor/${user.email}`
+      );
       return res.data;
     },
   });
 
-  const isInstructor = instructors?.some((user) => user.role === "instructor");
+  const isInstructor = instructorData?.instructor === true;
 
-  return [isInstructor, instructorsLoading];
+  return [isInstructor, isInstructorLoading];
 };
 
 export default useInstructor;

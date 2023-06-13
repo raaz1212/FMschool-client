@@ -73,7 +73,10 @@ const SelectedClass = () => {
                     >
                       DELETE
                     </button>
-                    <Link to={"/payment"} className="btn btn-outline">
+                    <Link
+                      to={"/dashboard/payments"}
+                      className="btn btn-outline"
+                    >
                       PAY
                     </Link>
                   </div>

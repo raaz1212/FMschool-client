@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -10,7 +11,11 @@ const AllUsers = () => {
     return res.data;
   });
 
+  const [disableAdminButton, setDisableAdminButton] = useState(false);
+  const [disableInstructorButton, setDisableInstructorButton] = useState(false);
+
   const handleMakeAdmin = (user) => {
+    setDisableAdminButton(true); // Disable the admin button
     axios
       .patch(`http://localhost:5000/users/admin/${user._id}`)
       .then((res) => {
@@ -18,7 +23,7 @@ const AllUsers = () => {
         if (res.data.modifiedCount) {
           refetch();
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
             title: `${user.name} is an Admin Now!`,
             showConfirmButton: false,
@@ -28,10 +33,14 @@ const AllUsers = () => {
       })
       .catch((error) => {
         console.error("Error making user admin:", error);
+      })
+      .finally(() => {
+        setDisableAdminButton(false);
       });
   };
 
   const handleMakeInstructor = (user) => {
+    setDisableInstructorButton(true);
     axios
       .patch(`http://localhost:5000/users/instructor/${user._id}`)
       .then((res) => {
@@ -39,7 +48,7 @@ const AllUsers = () => {
         if (res.data.modifiedCount) {
           refetch();
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
             title: `${user.name} is now an Instructor!`,
             showConfirmButton: false,
@@ -49,6 +58,9 @@ const AllUsers = () => {
       })
       .catch((error) => {
         console.error("Error making user instructor:", error);
+      })
+      .finally(() => {
+        setDisableInstructorButton(false);
       });
   };
 
@@ -87,6 +99,7 @@ const AllUsers = () => {
                     <button
                       onClick={() => handleMakeAdmin(user)}
                       className="btn btn-blue"
+                      disabled={disableAdminButton}
                     >
                       Make Admin
                     </button>
@@ -99,6 +112,7 @@ const AllUsers = () => {
                     <button
                       onClick={() => handleMakeInstructor(user)}
                       className="btn btn-green"
+                      disabled={disableInstructorButton}
                     >
                       Make Instructor
                     </button>

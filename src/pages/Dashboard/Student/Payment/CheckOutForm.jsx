@@ -1,9 +1,11 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import useAxiosSecure from "../../../../components/Hook/AxiosSecure";
-import useAuth from "../../../components/Hook/useAuth";
+import useAuth from "../../../../components/Hook/useAuth";
+import "./CheckOutForm.css";
 
-const CheckoutForm = ({ cart, price }) => {
+const CheckOutForm = ({ cart, price }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
@@ -81,8 +83,8 @@ const CheckoutForm = ({ cart, price }) => {
       };
       axiosSecure.post("/payments", payment).then((res) => {
         console.log(res.data);
-        if (res.data.result.insertedId) {
-          // display confirm
+        if (res.data.success && res.data.insertedId) {
+          // Display confirmation or perform any necessary actions
         }
       });
     }
@@ -107,22 +109,18 @@ const CheckoutForm = ({ cart, price }) => {
             },
           }}
         />
-        <button
-          className="btn btn-primary btn-sm mt-4"
-          type="submit"
-          disabled={!stripe || !clientSecret || processing}
-        >
+        <button className="btn btn-primary btn-sm mt-4" type="submit">
           Pay
         </button>
       </form>
-      {cardError && <p className="text-red-600 ml-8">{cardError}</p>}
+      {cardError && <div className="error">{cardError}</div>}
       {transactionId && (
-        <p className="text-green-500">
-          Transaction complete with transactionId: {transactionId}
-        </p>
+        <div className="success">
+          Payment successful. Transaction ID: {transactionId}
+        </div>
       )}
     </>
   );
 };
 
-export default CheckoutForm;
+export default CheckOutForm;
