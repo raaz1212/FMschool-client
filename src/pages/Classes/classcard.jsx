@@ -15,7 +15,7 @@ const ClassCard = ({ classData }) => {
     summary,
     _id,
   } = classData;
-  const { user, token } = useContext(AuthContext);
+  const { role, user, token } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [, refetch] = useEnrollments();
@@ -80,15 +80,13 @@ const ClassCard = ({ classData }) => {
           src={image}
           alt={name}
         />
-        <h3 className="text-xl font-bold mb-2">{name}</h3>
-        <p className="mb-2 text-lg font-semibold">
-          Instructor: {instructorName}
-        </p>
+        <h3 className="text-lg font-bold mb-2">{name}</h3>
+        <p className="mb-2 font-semibold">Instructor: {instructorName}</p>
         <p className="mb-2 text-lg font-semibold">
           Available Seats: {availableSeats}
         </p>
-        <p className="mb-4 text-lg font-semibold">Price: ${price}</p>
-        <p className="mb-6">{summary}</p>
+        <p className="mb-4 font-semibold">Price: ${price}</p>
+        <p className="mb-6">Total Student: {students}</p>
         <button
           onClick={handleEnroll}
           className={`btn ${

@@ -38,8 +38,8 @@ const Dashboard = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/students" className="text-blue-500">
-                  My Students
+                <Link to="/dashboard/listed-class" className="text-blue-500">
+                  My Class
                 </Link>
               </li>
             </ul>

@@ -6,6 +6,7 @@ import ClassesPage from "../pages/Classes/Classes";
 import AllUsersPage from "../pages/Dashboard/Admin/AllUsers";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import AddClassPage from "../pages/Dashboard/Instructor/AddClass";
+import MyClasses from "../pages/Dashboard/Instructor/ListedClass";
 import SelectedClass from "../pages/Dashboard/Student/SelectedClass";
 import Home from "../pages/Home/Home/Home";
 import InstructorsPage from "../pages/Instructors/Instructor";
@@ -68,6 +69,10 @@ const routes = createBrowserRouter([
       {
         path: "/dashboard/courses",
         element: <AddClassPage></AddClassPage>,
+      },
+      {
+        path: "/dashboard/listed-class",
+        element: <MyClasses></MyClasses>,
       },
     ],
   },

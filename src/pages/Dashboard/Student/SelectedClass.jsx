@@ -4,6 +4,7 @@ import useEnrollments from "../../../components/Hook/useEnrollments";
 
 const SelectedClass = () => {
   const [enrollments, refetch] = useEnrollments();
+  console.log(enrollments);
 
   const handleDelete = (item) => {
     Swal.fire({
