@@ -9,7 +9,9 @@ const NewClassList = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/classdata");
+        const response = await axios.get(
+          "https://radio-jockey-server.vercel.app/classdata"
+        );
         setClasses(response.data);
       } catch (error) {
         console.error(error);
@@ -21,9 +23,12 @@ const NewClassList = () => {
 
   const handleApprove = async (classId) => {
     try {
-      await axios.put(`http://localhost:5000/classdata/${classId}`, {
-        status: "approved",
-      });
+      await axios.put(
+        `https://radio-jockey-server.vercel.app/classdata/${classId}`,
+        {
+          status: "approved",
+        }
+      );
 
       setClasses((prevClasses) =>
         prevClasses.map((classItem) =>
@@ -48,7 +53,10 @@ const NewClassList = () => {
         status: "pending",
       };
 
-      await axios.post("http://localhost:5000/classes", newClass);
+      await axios.post(
+        "https://radio-jockey-server.vercel.app/classes",
+        newClass
+      );
     } catch (error) {
       console.error(error);
     }
@@ -56,9 +64,12 @@ const NewClassList = () => {
 
   const handleDeny = async (classId) => {
     try {
-      await axios.put(`http://localhost:5000/classdata/${classId}`, {
-        status: "denied",
-      });
+      await axios.put(
+        `https://radio-jockey-server.vercel.app/classdata/${classId}`,
+        {
+          status: "denied",
+        }
+      );
       const updatedClasses = classes.map((classItem) => {
         if (classItem._id === classId) {
           return { ...classItem, status: "denied" };
@@ -84,7 +95,7 @@ const NewClassList = () => {
   const handleModalSend = async () => {
     try {
       await axios.patch(
-        `http://localhost:5000/classdata/${selectedClass._id}`,
+        `https://radio-jockey-server.vercel.app/classdata/${selectedClass._id}`,
         {
           feedback: feedbackText,
         }

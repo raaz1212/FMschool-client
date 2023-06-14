@@ -4,7 +4,7 @@ const PopularClassesPage = () => {
   const [popularClasses, setPopularClasses] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/classes")
+    fetch("https://radio-jockey-server.vercel.app/classes")
       .then((response) => response.json())
       .then((data) => {
         const sortedClasses = data.sort((a, b) => b.students - a.students);

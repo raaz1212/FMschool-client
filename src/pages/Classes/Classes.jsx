@@ -5,7 +5,7 @@ const ClassesPage = () => {
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/classes")
+    fetch("https://radio-jockey-server.vercel.app/classes")
       .then((response) => response.json())
       .then((data) => setClasses(data))
       .catch((error) => console.error(error));

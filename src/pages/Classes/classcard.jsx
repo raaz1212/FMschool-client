@@ -26,7 +26,7 @@ const ClassCard = ({ classData }) => {
         price,
         email: user.email,
       };
-      fetch("http://localhost:5000/enrollments", {
+      fetch("https://radio-jockey-server.vercel.app/enrollments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -13,7 +13,7 @@ const useInstructor = () => {
         return { instructor: false };
       }
       const res = await axios.get(
-        `http://localhost:5000/users/instructor/${user.email}`
+        `https://radio-jockey-server.vercel.app/users/instructor/${user.email}`
       );
       return res.data;
     },

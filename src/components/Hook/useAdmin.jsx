@@ -13,7 +13,7 @@ const useAdmin = () => {
         return { admin: false };
       }
       const res = await axios.get(
-        `http://localhost:5000/users/admin/${user.email}`
+        `https://radio-jockey-server.vercel.app/users/admin/${user.email}`
       );
       return res.data;
     },

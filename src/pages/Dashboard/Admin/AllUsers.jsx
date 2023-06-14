@@ -7,7 +7,7 @@ const queryClient = new QueryClient();
 
 const AllUsers = () => {
   const { data: users = [], refetch } = useQuery(["users"], async () => {
-    const res = await axios.get("http://localhost:5000/users");
+    const res = await axios.get("https://radio-jockey-server.vercel.app/users");
     return res.data;
   });
 
@@ -17,7 +17,7 @@ const AllUsers = () => {
   const handleMakeAdmin = (user) => {
     setDisableAdminButton(true);
     axios
-      .patch(`http://localhost:5000/users/admin/${user._id}`)
+      .patch(`https://radio-jockey-server.vercel.app/users/admin/${user._id}`)
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount) {
@@ -42,7 +42,9 @@ const AllUsers = () => {
   const handleMakeInstructor = (user) => {
     setDisableInstructorButton(true);
     axios
-      .patch(`http://localhost:5000/users/instructor/${user._id}`)
+      .patch(
+        `https://radio-jockey-server.vercel.app/users/instructor/${user._id}`
+      )
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount) {

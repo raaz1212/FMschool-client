@@ -9,7 +9,7 @@ const useEnrollments = () => {
     queryKey: ["enrollments", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/enrollments?email=${user?.email}`
+        `https://radio-jockey-server.vercel.app/enrollments?email=${user?.email}`
       );
       return res.json();
     },
