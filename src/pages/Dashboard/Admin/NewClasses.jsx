@@ -21,12 +21,10 @@ const NewClassList = () => {
 
   const handleApprove = async (classId) => {
     try {
-      // Make API request to update the class status to "approved"
       await axios.put(`http://localhost:5000/classdata/${classId}`, {
         status: "approved",
       });
 
-      // Update the class status locally
       setClasses((prevClasses) =>
         prevClasses.map((classItem) =>
           classItem._id === classId
@@ -95,7 +93,7 @@ const NewClassList = () => {
         ...prevClass,
         feedback: feedbackText,
       }));
-      setFeedbackText(""); // Clear the feedback text
+      setFeedbackText("");
       setModalOpen(false);
     } catch (error) {
       console.error(error);

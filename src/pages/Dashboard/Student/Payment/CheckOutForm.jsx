@@ -68,7 +68,6 @@ const CheckOutForm = ({ cart, price }) => {
     setProcessing(false);
     if (paymentIntent.status === "succeeded") {
       setTransactionId(paymentIntent.id);
-      // save payment information to the server
       const payment = {
         email: user?.email,
         transactionId: paymentIntent.id,

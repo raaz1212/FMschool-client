@@ -13,7 +13,6 @@ const Contact = () => {
     const emailInput = document.getElementById("email");
     const messageInput = document.getElementById("message");
 
-    // Check if all fields are filled
     if (
       nameInput.value === "" ||
       emailInput.value === "" ||
@@ -27,7 +26,6 @@ const Contact = () => {
       return;
     }
 
-    // Check if the email is valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailInput.value)) {
       Swal.fire({

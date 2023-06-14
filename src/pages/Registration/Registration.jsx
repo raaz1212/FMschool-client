@@ -61,7 +61,7 @@ const Register = () => {
         updateUserData(result.user, name, photoURL);
         logOut(result.user);
         showSweetAlert();
-        reset(); // Reset the form fields
+        reset();
       })
       .catch((error) => {
         setError(error.message);

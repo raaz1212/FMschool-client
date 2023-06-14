@@ -15,7 +15,7 @@ const AllUsers = () => {
   const [disableInstructorButton, setDisableInstructorButton] = useState(false);
 
   const handleMakeAdmin = (user) => {
-    setDisableAdminButton(true); // Disable the admin button
+    setDisableAdminButton(true);
     axios
       .patch(`http://localhost:5000/users/admin/${user._id}`)
       .then((res) => {
