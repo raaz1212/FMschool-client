@@ -3,7 +3,7 @@ export const addClass = async (classdata) => {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      // authorization: `Bearer ${localStorage.getItem('access-token')}`,
+      authorization: `Bearer ${localStorage.getItem("access-token")}`,
     },
     body: JSON.stringify(classdata),
   });

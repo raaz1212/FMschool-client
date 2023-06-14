@@ -10,6 +10,7 @@ import AddClassPage from "../pages/Dashboard/Instructor/AddClass";
 import MyClasses from "../pages/Dashboard/Instructor/ListedClass";
 import Payment from "../pages/Dashboard/Student/Payment/Payment";
 import SelectedClass from "../pages/Dashboard/Student/SelectedClass";
+import NotFoundPage from "../pages/Error/Error";
 import Home from "../pages/Home/Home/Home";
 import InstructorsPage from "../pages/Instructors/Instructor";
 import LoginPage from "../pages/Login/Login";
@@ -28,6 +29,7 @@ const routes = createBrowserRouter([
         <Footer />
       </>
     ),
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "/",

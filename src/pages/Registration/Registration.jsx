@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import Social from "../../components/Social/Social";
 
 const Register = () => {
-  document.title = "DC Toys | Register";
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { createUser, logOut } = useContext(AuthContext);
@@ -22,6 +21,8 @@ const Register = () => {
 
   const password = watch("password");
 
+  const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{6,})/;
+
   const onSubmit = (data) => {
     const { email, password, name, photoURL } = data;
     setSuccess("");
@@ -32,8 +33,10 @@ const Register = () => {
       return;
     }
 
-    if (password !== data.confirmPassword) {
-      setError("Passwords do not match.");
+    if (!passwordPattern.test(password)) {
+      setError(
+        "Password must contain at least 6 characters, one capital letter, and one special character."
+      );
       return;
     }
 
