@@ -1,6 +1,6 @@
-# DC Toys
+# FMschool
 
-## [Live Link](https://dc-toys.web.app/)
+## [Live Link](https://radio-jockey-5e76d.web.app/)
 
 ### FMschool is an online platform that offers a wide range of classes and instructors for individuals seeking to learn new skills and pursue their passions. This project aims to provide an engaging and visually appealing website that promotes a unique learning experience.
 
